@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>희망중입자동행센터 | 프리미엄 일본 중입자 치료 에이전시</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- Swiper CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0B1527',    
+                            blue: '#1A365D',    
+                            gold: '#D4AF37',    
+                            light: '#F8FAFC',   
+                        },
+                        gold: {
+                            400: '#FBBF24',
+                            500: '#F59E0B'
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(212, 175, 55, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Pretendard', sans-serif; -webkit-font-smoothing: antialiased; padding-bottom: 80px; overflow-x: hidden; }
+        @media (min-width: 768px) { body { padding-bottom: 0; } }
+        .word-keep { word-break: keep-all; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B1527; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+
+        /* --- 프리미엄 스크롤 애니메이션 (Intersection Observer 용) --- */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .stagger-item { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
+        }
+        .stagger-item.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        /* FAQ 아코디언 애니메이션 */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+        .faq-icon {
+            transition: transform 0.4s ease;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="text-slate-800 bg-brand-light">
+
+    <!-- Header & Navigation -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-100 transition-all duration-300 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-shield-halved text-brand-blue text-3xl"></i>
+                    <span class="font-extrabold text-2xl text-brand-navy tracking-tight">희망<span class="text-brand-blue">중입자</span>동행센터</span>
+                </a>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8 items-center h-full pt-1">
+                    <a href="index.html" class="h-full flex items-center text-brand-blue border-b-2 border-brand-blue font-bold text-[16px] transition px-2">회사소개</a>
+                    <a href="treatment.html" class="h-full flex items-center text-slate-600 border-b-2 border-transparent hover:text-brand-blue font-semibold text-[16px] transition px-2">치료소개</a>
+                    <a href="https://blog.naver.com/sangseoung_768" target="_blank" class="h-full flex items-center text-slate-600 border-b-2 border-transparent hover:text-brand-blue font-semibold text-[16px] transition px-2">치료칼럼</a>
+                    <a href="contact.html" class="h-full flex items-center text-slate-600 border-b-2 border-transparent hover:text-brand-blue font-semibold text-[16px] transition px-2">문의하기</a>
+                </nav>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-navy hover:text-brand-blue focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar" class="fixed inset-y-0 right-0 z-[60] w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col">
+        <div class="flex justify-end p-4 border-b border-slate-100">
+            <button id="mobile-close-btn" class="text-slate-500 hover:text-slate-800 text-2xl p-2 focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="flex flex-col px-6 space-y-6 mt-6">
+            <a href="index.html" class="text-left text-lg font-bold text-brand-blue border-b border-slate-100 pb-4 transition hover:text-brand-blue">회사소개</a>
+            <a href="treatment.html" class="text-left text-lg font-bold text-slate-800 border-b border-slate-100 pb-4 transition hover:text-brand-blue">치료소개</a>
+            <a href="https://blog.naver.com/sangseoung_768" target="_blank" class="text-left text-lg font-bold text-slate-800 border-b border-slate-100 pb-4 transition hover:text-brand-blue">치료칼럼</a>
+            <a href="contact.html" class="text-left text-lg font-bold text-slate-800 border-b border-slate-100 pb-4 transition hover:text-brand-blue">문의하기</a>
+        </div>
+    </div>
+    
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden opacity-0 transition-opacity duration-300 md:hidden" onclick="closeMobileMenu()"></div>
+
+    <!-- Mobile Floating CTA -->
+    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 p-3 z-50 flex gap-2 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        <a href="tel:010-4642-7315" class="flex-1 bg-slate-100 text-brand-navy text-center py-3.5 rounded-xl font-bold text-[15px] flex items-center justify-center gap-2">
+            <i class="fa-solid fa-phone"></i> 전화상담
+        </a>
+        <a href="contact.html" class="flex-[1.5] bg-brand-navy text-white text-center py-3.5 rounded-xl font-bold text-[15px] flex items-center justify-center gap-2 shadow-lg">
+            무료 사전 판독 신청
+        </a>
+    </div>
+
+    <!-- Desktop Right Floating Quick Menu -->
+    <div class="hidden md:flex flex-col fixed right-0 top-1/2 transform -translate-y-1/2 z-50 bg-white shadow-[-5px_0_25px_rgba(0,0,0,0.1)] rounded-l-2xl overflow-hidden border border-r-0 border-slate-200">
+        <a href="https://blog.naver.com/sangseoung_768" target="_blank" class="flex flex-col items-center justify-center py-5 px-4 border-b border-slate-100 hover:bg-slate-50 transition-colors group w-24">
+            <div class="w-12 h-12 rounded-full bg-slate-100 text-brand-blue flex items-center justify-center text-xl mb-2 group-hover:scale-110 group-hover:bg-brand-blue group-hover:text-white transition-all duration-300">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <span class="text-[14px] font-bold text-slate-700">칼럼보기</span>
+        </a>
+        <a href="tel:010-4642-7315" class="flex flex-col items-center justify-center py-5 px-4 bg-brand-navy hover:bg-brand-blue transition-colors group w-24">
+            <div class="w-12 h-12 rounded-full bg-white/10 text-brand-gold flex items-center justify-center text-xl mb-2 group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-brand-navy transition-all duration-300">
+                <i class="fa-solid fa-phone-volume"></i>
+            </div>
+            <span class="text-[14px] font-bold text-white">상담전화</span>
+        </a>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="pt-20">
+
+        <!-- [섹션 1] 메인 히어로 (배경 영상 적용) -->
+        <section class="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+            <video src="01.mp4" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <div class="absolute inset-0 bg-black/65 backdrop-blur-[2px]"></div>
+            
+            <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-10">
+                <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-brand-gold text-sm font-bold mb-8 backdrop-blur-sm reveal">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
+                    </span>
+                    첫인상부터 압도적인 안심 선언
+                </div>
+
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-[1.25] mb-6 word-keep tracking-tight reveal">
+                    일본 중입자 치료,<br>더 이상 <span class="text-gold-400">‘부르는 게 값’</span>이 아닙니다.
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-200 mb-12 font-light leading-relaxed word-keep reveal">
+                    생명을 담보로 폭리를 취하는 관행, 이제는 끝나야 합니다.<br>
+                    가장 투명한 비용으로, 가장 완벽한 의료 동행을 약속합니다.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left stagger-group">
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl stagger-item">
+                        <h3 class="text-gold-400 font-bold text-xl mb-2">실제 원가 100% 공개</h3>
+                        <p class="text-gray-300 text-sm">최저가가 아닐 시 대행 수수료 전액 환불 보장</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl stagger-item">
+                        <h3 class="text-gold-400 font-bold text-xl mb-2">30인 전문 법인 시스템</h3>
+                        <p class="text-gray-300 text-sm">의료·통역·법무까지 1인 기업의 먹튀 완벽 차단</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl stagger-item">
+                        <h3 class="text-gold-400 font-bold text-xl mb-2">인천공항부터 전담 동행</h3>
+                        <p class="text-gray-300 text-sm">현지 유학생이 아닌 '일본 현지인' 매니저 24h 밀착</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 1-5] 중입자 에이전시의 현실 -->
+        <section class="py-24 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row gap-16 items-center">
+                    <div class="lg:w-1/2 reveal">
+                        <span class="inline-block text-red-600 font-bold bg-red-50 border border-red-100 px-4 py-1.5 rounded-full text-sm mb-6">
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i> 중입자 에이전시의 현실
+                        </span>
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight word-keep">
+                            치료만으로도 벅찬데, 왜<br>
+                            <span class="relative inline-block">
+                                <span class="relative z-10 text-red-600">에이전시의 횡포</span>
+                                <span class="absolute bottom-1 left-0 w-full h-3 bg-red-100 -z-10"></span>
+                            </span>까지<br>
+                            걱정해야 합니까?
+                        </h2>
+                        <p class="text-lg text-slate-600 leading-relaxed word-keep">
+                            지푸라기라도 잡고 싶은 환자와 가족의 절박함. 그 절박함 뒤에 숨어 폭리를 취하고 무책임하게 방치하는 악성 관행들이 시장에 만연해 있습니다.
+                        </p>
+                    </div>
+                    <div class="lg:w-1/2 space-y-6 stagger-group">
+                        <div class="bg-slate-50 border border-slate-100 p-8 rounded-3xl shadow-sm stagger-item">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-3 flex items-center">
+                                <span class="text-red-500 mr-3 text-3xl">₩</span> 1.5~2배 부풀려진 깜깜이 수수료
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed word-keep">실제 일본 병원에 납부해야 할 <strong class="text-red-500">원가가 얼마인지 숨긴 채</strong>, 터무니없는 총액을 청구합니다. 환자는 수수료로 얼마를 내는지조차 알 수 없습니다.</p>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 p-8 rounded-3xl shadow-sm stagger-item">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-3 flex items-center">
+                                <span class="text-red-500 mr-3 text-3xl">🏃‍♂️</span> 1인 기업 먹튀와 반쪽짜리 케어
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed word-keep">환자를 비행기에 혼자 태워 보내고, 현지 병원 앞에서는 전문 통역가가 아닌 <strong class="text-red-500">아르바이트 유학생</strong>을 붙여줍니다. 사고 발생 시 <strong class="text-red-500">책임질 법적 주체</strong>가 없습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 2] 3가지 절대 원칙 -->
+        <section class="py-24 lg:py-32 bg-brand-light">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <span class="text-brand-blue font-bold tracking-widest text-sm mb-3 block">THE ABSOLUTE PRINCIPLES</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 word-keep leading-tight mb-6">우리가 덜 가져가고,<br>환자에게 더 내어드리겠습니다</h2>
+                </div>
+
+                <div class="flex flex-col gap-10 max-w-6xl mx-auto">
+                    
+                    <!-- 원칙 01 -->
+                    <div class="bg-white border border-slate-200 rounded-[2rem] shadow-xl flex flex-col md:flex-row items-stretch overflow-hidden reveal">
+                        <!-- 텍스트 50% -->
+                        <div class="w-full md:w-1/2 p-10 md:p-14 flex flex-col justify-center bg-white z-10">
+                            <div class="text-brand-gold font-black text-xl mb-3">원칙 01</div>
+                            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 mb-5 word-keep leading-tight"><span class="text-brand-blue">현지 원가 100% 공개</span> &<br>최저가 보상제</h3>
+                            <p class="text-slate-600 text-lg leading-relaxed word-keep">
+                                병원에 직접 납부하는 <strong class="text-slate-800">'실제 의료비'</strong>와 당사의 <strong class="text-slate-800">'수속 대행 수수료'</strong>를 계약서에 완벽하게 분리하여 명시합니다.<br> 
+                                <strong class="text-brand-blue">만약 타사보다 수수료가 1원이라도 비싸다면, 대행 수수료를 전액(0원) 면제해 드립니다.</strong>
+                            </p>
+                        </div>
+                        <!-- 이미지 50% -->
+                        <div class="w-full md:w-1/2 relative min-h-[300px]">
+                            <div class="absolute inset-0 w-full h-full" style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%); mask-image: linear-gradient(to right, transparent 0%, black 25%);">
+                                <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="투명한 계약" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 원칙 02 -->
+                    <div class="bg-white border border-slate-200 rounded-[2rem] shadow-xl flex flex-col md:flex-row-reverse items-stretch overflow-hidden reveal">
+                        <!-- 텍스트 50% -->
+                        <div class="w-full md:w-1/2 p-10 md:p-14 flex flex-col justify-center bg-white z-10">
+                            <div class="text-brand-gold font-black text-xl mb-3">원칙 02</div>
+                            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 mb-5 word-keep leading-tight"><span class="text-brand-blue">30인 전문가</span>로 구성된<br>탄탄한 법인 회사</h3>
+                            <p class="text-slate-600 text-lg leading-relaxed word-keep">
+                                수익만을 쫓는 1인 영세 에이전시의 '먹튀'와 불안정성을 <strong class="text-red-500">원천 차단</strong>했습니다.<br>
+                                <strong>상담, 수속, 통역, 법무까지 각 분야 최상위 <span class="text-brand-blue">전문가 30명</span>이 오직 한 분의 환자를 위해 완벽한 <span class="text-brand-blue">원팀(One-team)</span>으로 움직입니다.</strong>
+                            </p>
+                        </div>
+                        <!-- 이미지 50% -->
+                        <div class="w-full md:w-1/2 relative min-h-[300px]">
+                            <div class="absolute inset-0 w-full h-full" style="-webkit-mask-image: linear-gradient(to left, transparent 0%, black 25%); mask-image: linear-gradient(to left, transparent 0%, black 25%);">
+                                <!-- 로컬 01.jpg 호출 -->
+                                <img src="01.jpg" alt="30인 전문가 단체 사진" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 원칙 03 -->
+                    <div class="bg-brand-navy border border-brand-navy rounded-[2rem] shadow-2xl flex flex-col md:flex-row items-stretch text-white overflow-hidden reveal">
+                        <!-- 텍스트 50% -->
+                        <div class="w-full md:w-1/2 p-10 md:p-14 flex flex-col justify-center bg-brand-navy z-10">
+                            <div class="text-brand-gold font-black text-xl mb-3">원칙 03</div>
+                            <h3 class="text-3xl md:text-4xl font-bold mb-5 word-keep leading-tight">인천공항부터 <span class="text-gold-400">‘일본</span><br><span class="text-gold-400">현지인’</span> 전담 동행</h3>
+                            <p class="text-slate-300 text-lg leading-relaxed word-keep">
+                                환자를 혼자 비행기에 태우고 일본 병원 앞에서 만나는 반쪽짜리 동행이 아닙니다.<br>
+                                <strong>한국어에 능통한 <span class="text-gold-400">'일본 현지인' 매니저</span>가 한국 공항 출국장부터 <span class="text-gold-400">24시간 밀착 보호</span>합니다.</strong>
+                            </p>
+                        </div>
+                        <!-- 이미지 50% -->
+                        <div class="w-full md:w-1/2 relative min-h-[300px]">
+                            <div class="absolute inset-0 w-full h-full" style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%); mask-image: linear-gradient(to right, transparent 0%, black 25%);">
+                                <!-- 로컬 02.jpg 호출 -->
+                                <img src="02.jpg" alt="일본 현지인 매니저 및 여권" class="w-full h-full object-cover object-top opacity-80">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 3] 치료 가능 암종 14개 벤토 카드 -->
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <span class="text-brand-blue font-bold tracking-widest text-sm mb-3 block">TREATABLE CANCERS</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 word-keep leading-tight mb-4">
+                        어떤 암이 치료 가능할까요?
+                    </h2>
+                    <p class="text-lg text-slate-600 word-keep">
+                        머리부터 골반까지, 중입자 치료가 가능한 주요 암종
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 max-w-6xl mx-auto stagger-group">
+                    <!-- 아이콘 카드 14개 -->
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-head-side-virus"></i></div><div><p class="font-bold text-slate-900 text-lg">두개저 종양</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Skull Base Tumor</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">16회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-head-side-mask"></i></div><div><p class="font-bold text-slate-900 text-lg">두경부암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Head & Neck Cancer</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">16회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-eye"></i></div><div><p class="font-bold text-slate-900 text-lg">안구 종양</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Choroidal Melanoma</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">4회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-bone"></i></div><div><p class="font-bold text-slate-900 text-lg">골연부 종양</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Bone & Soft Tissue</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">8-16회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-mars"></i></div><div><p class="font-bold text-slate-900 text-lg">전립선암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Prostate Cancer</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">12회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-lungs"></i></div><div><p class="font-bold text-slate-900 text-lg">폐암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Lung Cancer</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">1-16회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-disease"></i></div><div><p class="font-bold text-slate-900 text-lg">간암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Liver Cancer</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">2-4회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-viruses"></i></div><div><p class="font-bold text-slate-900 text-lg">췌장암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Pancreatic Cancer</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">12회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-vial-virus"></i></div><div><p class="font-bold text-slate-900 text-lg">신장암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Renal Cell Carcinoma</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">12회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-stomach"></i></div><div><p class="font-bold text-slate-900 text-lg">식도암/대장암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Esophageal/Colorectal</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">8-16회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-venus"></i></div><div><p class="font-bold text-slate-900 text-lg">부인과암/유방암</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Gynecologic/Breast</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">4-20회</span></div>
+                    <div class="border border-slate-200 rounded-2xl p-6 flex items-center justify-between hover:border-brand-blue transition hover:-translate-y-1 hover:shadow-md bg-slate-50 stagger-item"><div class="flex items-center gap-4"><div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm text-brand-blue/80"><i class="fa-solid fa-circle-nodes"></i></div><div><p class="font-bold text-slate-900 text-lg">전이성 종양</p><p class="text-[11px] text-slate-400 uppercase tracking-wider">Metastatic Tumor</p></div></div><span class="bg-blue-50 text-brand-blue text-[13px] font-extrabold px-3 py-1 rounded-full">1-16회</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 4] 정직한 판독 -->
+        <section class="py-24 lg:py-32 bg-brand-light overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    <div class="w-full lg:w-1/2 reveal">
+                        <!-- 로컬 03.jpg 호출 -->
+                        <img src="03.jpg" alt="정직한 상담" class="rounded-[2rem] shadow-xl w-full object-cover">
+                    </div>
+                    <div class="w-full lg:w-1/2 reveal" style="transition-delay: 200ms;">
+                        <div class="w-14 h-14 bg-brand-navy rounded-xl flex items-center justify-center mb-6 shadow-md">
+                            <i class="fa-solid fa-user-doctor text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 leading-tight word-keep">희망고문 없이,<br>정직하게 말씀드립니다.</h2>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed word-keep">
+                            현실적으로 중입자 치료 적용이 어려운 케이스는 수익을 위해 무리하게 수속을 진행하지 않고 <strong class="text-slate-900">솔직하게 불가능을 말씀드립니다.</strong>
+                        </p>
+                        <div class="bg-white border-l-4 border-brand-navy p-6 rounded-r-2xl shadow-sm">
+                            <p class="text-lg text-brand-navy font-bold leading-relaxed word-keep">
+                                대신, 환자분의 소중한 시간을 아껴드리기 위해 <span class="text-gold-500 border-b-2 border-gold-500 pb-1">국내 진료기록만 전달</span>해 주시면 일본 현지 전문의가 치료 가능 여부를 <span class="text-gold-500 border-b-2 border-gold-500 pb-1">무료로 먼저 판독</span>해 드립니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 5] 일본 6대 메이저 병원 네트워크 -->
+        <section class="py-24 bg-brand-navy text-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 word-keep">암 치료는 ‘골든타임’ 싸움입니다</h2>
+                    <p class="text-xl text-slate-400 word-keep">대기 없는 즉시 수속, 일본 6대 메이저 병원 다이렉트 네트워크</p>
+                </div>
+                
+                <div class="swiper hospital-swiper pb-16 reveal">
+                    <div class="swiper-wrapper">
+                        <!-- 병원 카드들 -->
+                        <div class="swiper-slide bg-white text-slate-800 rounded-3xl p-8 shadow-xl flex flex-col justify-between h-full">
+                            <div><h3 class="text-2xl font-bold text-brand-navy mb-1">QST병원</h3><p class="text-xs text-slate-500 mb-6 font-medium">QST病院(量子科学技術研究開発機構)</p><table class="w-full text-left text-[14px] mb-6"><tr class="border-b"><th class="py-3 text-slate-500 w-24">소재지</th><td class="py-3 font-medium">일본 지바현 지바시</td></tr><tr class="border-b"><th class="py-3 text-slate-500">시설 정보</th><td class="py-3 font-medium">HIMAC 기반 탄소이온선 시설</td></tr><tr class="border-b"><th class="py-3 text-slate-500">치료비</th><td class="py-3 font-bold text-brand-navy">해외 환자 578.6만 엔</td></tr><tr><th class="py-3 text-slate-500">정보 출처</th><td class="py-3 text-[11px] text-slate-400">기관 공식 홈페이지, PTCOG</td></tr></table></div>
+                            <a href="https://hospital.qst.go.jp/" target="_blank" class="block w-full text-center bg-slate-100 hover:bg-brand-navy hover:text-white transition py-3 rounded-xl font-bold text-brand-navy">홈페이지 바로가기</a>
+                        </div>
+                        <div class="swiper-slide bg-white text-slate-800 rounded-3xl p-8 shadow-xl flex flex-col justify-between h-full">
+                            <div><h3 class="text-2xl font-bold text-brand-navy mb-1 word-keep">효고현립 입자선의료센터</h3><p class="text-xs text-slate-500 mb-6 font-medium">兵庫県立粒子線医療センター</p><table class="w-full text-left text-[14px] mb-6"><tr class="border-b"><th class="py-3 text-slate-500 w-24">소재지</th><td class="py-3 font-medium">일본 효고현 다쓰노시</td></tr><tr class="border-b"><th class="py-3 text-slate-500">시설 정보</th><td class="py-3 font-medium word-keep">양성자선·탄소이온선 시설</td></tr><tr class="border-b"><th class="py-3 text-slate-500">치료비</th><td class="py-3 font-bold text-brand-navy">317.2만 엔 (선진의료)</td></tr><tr><th class="py-3 text-slate-500">정보 출처</th><td class="py-3 text-[11px] text-slate-400">기관 공식 홈페이지, PTCOG</td></tr></table></div>
+                            <a href="https://www.hibmc.shingu.hyogo.jp/" target="_blank" class="block w-full text-center bg-slate-100 hover:bg-brand-navy hover:text-white transition py-3 rounded-xl font-bold text-brand-navy">홈페이지 바로가기</a>
+                        </div>
+                        <div class="swiper-slide bg-white text-slate-800 rounded-3xl p-8 shadow-xl flex flex-col justify-between h-full">
+                            <div><h3 class="text-2xl font-bold text-brand-navy mb-1 word-keep">군마대학 중입자선의학센터</h3><p class="text-xs text-slate-500 mb-6 font-medium">群馬大学重粒子線医学センター</p><table class="w-full text-left text-[14px] mb-6"><tr class="border-b"><th class="py-3 text-slate-500 w-24">소재지</th><td class="py-3 font-medium word-keep">일본 군마현 마에바시시</td></tr><tr class="border-b"><th class="py-3 text-slate-500">시설 정보</th><td class="py-3 font-medium word-keep">대학 부속 탄소이온선 시설</td></tr><tr class="border-b"><th class="py-3 text-slate-500">치료비</th><td class="py-3 font-bold text-brand-navy">314만 엔 (선진의료)</td></tr><tr><th class="py-3 text-slate-500">정보 출처</th><td class="py-3 text-[11px] text-slate-400">기관 공식 홈페이지, PTCOG</td></tr></table></div>
+                            <a href="https://heavy-ion.showa.gunma-u.ac.jp/" target="_blank" class="block w-full text-center bg-slate-100 hover:bg-brand-navy hover:text-white transition py-3 rounded-xl font-bold text-brand-navy">홈페이지 바로가기</a>
+                        </div>
+                        <div class="swiper-slide bg-white text-slate-800 rounded-3xl p-8 shadow-xl flex flex-col justify-between h-full">
+                            <div><h3 class="text-2xl font-bold text-brand-navy mb-1 word-keep">규슈 SAGA HIMAT</h3><p class="text-xs text-slate-500 mb-6 font-medium">九州国際重粒子線がん治療センター</p><table class="w-full text-left text-[14px] mb-6"><tr class="border-b"><th class="py-3 text-slate-500 w-24">소재지</th><td class="py-3 font-medium">일본 사가현 도스시</td></tr><tr class="border-b"><th class="py-3 text-slate-500">시설 정보</th><td class="py-3 font-medium word-keep">탄소이온선 치료 시설</td></tr><tr class="border-b"><th class="py-3 text-slate-500">치료비</th><td class="py-3 font-bold text-brand-navy">약 314만 엔</td></tr><tr><th class="py-3 text-slate-500">정보 출처</th><td class="py-3 text-[11px] text-slate-400">기관 공식 홈페이지, PTCOG</td></tr></table></div>
+                            <a href="https://www.saga-himat.jp/" target="_blank" class="block w-full text-center bg-slate-100 hover:bg-brand-navy hover:text-white transition py-3 rounded-xl font-bold text-brand-navy">홈페이지 바로가기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 6] 5단계 프로세스 -->
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 word-keep reveal">일본어를 전혀 몰라도 완벽합니다</h2>
+                <p class="text-xl text-slate-600 mb-20 word-keep reveal">집을 나서는 순간부터 완치 후 귀국까지, 빈틈없는 5단계 안심 동행</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6 relative stagger-group">
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-[2px] bg-slate-100 -z-10 reveal"></div>
+                    
+                    <!-- Step 1~5 -->
+                    <div class="bg-brand-light p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition stagger-item"><div class="w-16 h-16 bg-brand-navy text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md"><i class="fa-solid fa-file-medical text-2xl"></i></div><span class="text-slate-400 font-bold block mb-2 tracking-wider">STEP 1</span><h3 class="font-bold text-lg text-slate-900 word-keep">국내 무료<br>사전 판독</h3></div>
+                    <div class="bg-brand-light p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition stagger-item"><div class="w-16 h-16 bg-brand-navy text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md"><i class="fa-solid fa-file-signature text-2xl"></i></div><span class="text-slate-400 font-bold block mb-2 tracking-wider">STEP 2</span><h3 class="font-bold text-lg text-slate-900 word-keep">100% 원가 분리<br>안심 계약</h3></div>
+                    <div class="bg-white p-8 rounded-3xl border-2 border-gold-400 shadow-xl transform md:-translate-y-4 stagger-item relative"><div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gold-400 text-white text-[11px] font-bold px-3 py-1 rounded-full whitespace-nowrap">핵심 차별점</div><div class="w-20 h-20 bg-gold-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"><i class="fa-solid fa-plane-departure text-3xl"></i></div><span class="text-gold-500 font-bold block mb-2 tracking-wider">STEP 3</span><h3 class="font-bold text-xl text-slate-900 word-keep">인천공항 출발부터<br>현지인 매니저 동행</h3></div>
+                    <div class="bg-brand-light p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition stagger-item"><div class="w-16 h-16 bg-brand-navy text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md"><i class="fa-solid fa-language text-2xl"></i></div><span class="text-slate-400 font-bold block mb-2 tracking-wider">STEP 4</span><h3 class="font-bold text-lg text-slate-900 word-keep">의료 전문 원어민<br>1:1 병원 통역</h3></div>
+                    <div class="bg-brand-light p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition stagger-item"><div class="w-16 h-16 bg-brand-navy text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md"><i class="fa-solid fa-hand-holding-heart text-2xl"></i></div><span class="text-slate-400 font-bold block mb-2 tracking-wider">STEP 5</span><h3 class="font-bold text-lg text-slate-900 word-keep">안전한 귀국 및<br>평생 사후 관리</h3></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 6.5] 자주 묻는 질문 (FAQ) -->
+        <section class="py-24 bg-slate-50 overflow-hidden">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <span class="text-brand-blue font-bold tracking-widest text-sm mb-3 block">FAQ</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 word-keep leading-tight mb-4">
+                        자주 묻는 질문
+                    </h2>
+                    <p class="text-lg text-slate-600 word-keep">
+                        환자분들이 가장 궁금해하시는 내용을 모았습니다.
+                    </p>
+                </div>
+                
+                <div class="space-y-4 stagger-group">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item stagger-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm transition-shadow hover:shadow-md">
+                        <button class="w-full text-left px-6 py-6 md:px-8 flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                            <span class="font-bold text-[17px] text-slate-900 flex items-center gap-3 word-keep">
+                                <span class="text-brand-blue text-xl">Q.</span> 중입자치료 기간, 횟수는 어떻게 되나요?
+                            </span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 faq-icon ml-4 flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-content bg-brand-light">
+                            <div class="px-6 md:px-8 pb-7 text-slate-600 leading-relaxed flex gap-3 pt-2">
+                                <span class="text-brand-gold font-bold text-xl">A.</span>
+                                <p class="word-keep mt-0.5">암종 및 환자분의 상태에 따라 다르지만, 일반적으로 <strong>1주에서 4주</strong> 정도 소요되며 치료 횟수는 <strong>1회에서 최대 16회</strong>까지 진행됩니다. (예: 전립선암 12회, 간암 2~4회 등)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="faq-item stagger-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm transition-shadow hover:shadow-md">
+                        <button class="w-full text-left px-6 py-6 md:px-8 flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                            <span class="font-bold text-[17px] text-slate-900 flex items-center gap-3 word-keep">
+                                <span class="text-brand-blue text-xl">Q.</span> 일본 중입자치료 비용은 얼마인가요?
+                            </span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 faq-icon ml-4 flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-content bg-brand-light">
+                            <div class="px-6 md:px-8 pb-7 text-slate-600 leading-relaxed flex gap-3 pt-2">
+                                <span class="text-brand-gold font-bold text-xl">A.</span>
+                                <p class="word-keep mt-0.5">일본 6대 메이저 병원 기준, 병원비(원가)는 약 314만 엔에서 578만 엔 사이입니다. 저희 희망중입자동행센터는 <strong>병원 납부 원가를 100% 투명하게 공개</strong>하며, 1.5~2배씩 부풀리는 관행 없이 합리적인 대행 수수료만을 고지합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="faq-item stagger-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm transition-shadow hover:shadow-md">
+                        <button class="w-full text-left px-6 py-6 md:px-8 flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                            <span class="font-bold text-[17px] text-slate-900 flex items-center gap-3 word-keep">
+                                <span class="text-brand-blue text-xl">Q.</span> 일본중입자치료 가능 여부는 어떻게 알 수 있나요?
+                            </span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 faq-icon ml-4 flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-content bg-brand-light">
+                            <div class="px-6 md:px-8 pb-7 text-slate-600 leading-relaxed flex gap-3 pt-2">
+                                <span class="text-brand-gold font-bold text-xl">A.</span>
+                                <p class="word-keep mt-0.5">국내에서 촬영하신 <strong>최근 영상 자료(CT, MRI, PET-CT 등)와 진단서 및 소견서</strong>를 저희에게 전달해 주시면, 번역 후 일본 현지 전문의에게 보내 치료 가능 여부를 <strong>무료로 사전 판독</strong>해 드립니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="faq-item stagger-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm transition-shadow hover:shadow-md">
+                        <button class="w-full text-left px-6 py-6 md:px-8 flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                            <span class="font-bold text-[17px] text-slate-900 flex items-center gap-3 word-keep">
+                                <span class="text-brand-blue text-xl">Q.</span> 일본중입자치료도 오래 대기해야 하나요?
+                            </span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 faq-icon ml-4 flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-content bg-brand-light">
+                            <div class="px-6 md:px-8 pb-7 text-slate-600 leading-relaxed flex gap-3 pt-2">
+                                <span class="text-brand-gold font-bold text-xl">A.</span>
+                                <p class="word-keep mt-0.5">아닙니다. 국내는 대기 인원이 많아 수개월 이상 기다려야 하는 경우가 많지만, 일본은 다수의 치료 센터를 보유하고 있습니다. 저희는 일본 6대 메이저 병원과의 다이렉트 네트워크를 통해 <strong>대기 없이 가장 빠른 즉시 수속 및 치료 시작</strong>이 가능하도록 돕고 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="faq-item stagger-item bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm transition-shadow hover:shadow-md">
+                        <button class="w-full text-left px-6 py-6 md:px-8 flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                            <span class="font-bold text-[17px] text-slate-900 flex items-center gap-3 word-keep">
+                                <span class="text-brand-blue text-xl">Q.</span> 중입자치료와 항암치료 병행 가능한가요?
+                            </span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 faq-icon ml-4 flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-content bg-brand-light">
+                            <div class="px-6 md:px-8 pb-7 text-slate-600 leading-relaxed flex gap-3 pt-2">
+                                <span class="text-brand-gold font-bold text-xl">A.</span>
+                                <p class="word-keep mt-0.5">환자분의 건강 상태와 주치의의 의학적 판단에 따라 병행 가능 여부가 결정됩니다. 사전 판독 단계에서 일본 의료진이 기존 치료 내역을 면밀히 검토하여 <strong>가장 안전하고 효과적인 병행 및 치료 계획</strong>을 안내해 드립니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [섹션 7] 역발상 콜투액션(CTA) 배너 -->
+        <section class="relative bg-brand-navy py-40 flex items-center justify-center text-center overflow-hidden">
+            <div class="absolute inset-0 bg-black opacity-30"></div>
+            <div class="relative z-10 px-4 max-w-5xl mx-auto reveal">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight word-keep">
+                    지금 문의하지 않으셔도 됩니다.<br>
+                    우선 충분히 비교해 보세요.
+                </h2>
+                
+                <p class="text-xl md:text-2xl text-slate-300 font-light mb-16 leading-relaxed word-keep">
+                    함께할 만하다고 느끼셨다면,<br>그때 이야기를 들려주세요.
+                </p>
+                
+                <a href="contact.html" class="inline-block bg-gold-500 hover:bg-gold-400 text-brand-navy font-extrabold text-2xl py-5 px-20 rounded-full shadow-[0_0_40px_rgba(234,179,8,0.4)] transform transition hover:scale-105 hover:-translate-y-1">
+                    문의하기
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#050A13] text-slate-400 py-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center gap-2 mb-4 justify-center md:justify-start">
+                        <i class="fa-solid fa-shield-halved text-slate-500 text-2xl"></i>
+                        <span class="font-extrabold text-xl text-white tracking-tight">희망<span class="text-slate-500">중입자</span>동행센터</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-slate-500">
+                        상호: 희망중입자동행센터 | 사업자: 470-88-02864 | 대표자: 유동현<br>
+                        주소: 서울특별시 금천구 가산디지털2로 135, 19층
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-10 pt-8 text-center text-xs text-slate-600">
+                &copy; 2026 희망중입자동행센터. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // DOMContentLoaded 로드 완료 시 스크립트 실행
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Swiper (6대 병원) 안전 초기화 함수
+            let hospitalSwiperInstance = null;
+            function initHospitalSwiper() {
+                if (hospitalSwiperInstance || typeof Swiper === 'undefined') return;
+                try {
+                    hospitalSwiperInstance = new Swiper('.hospital-swiper', {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        pagination: { el: '.swiper-pagination', clickable: true },
+                        breakpoints: {
+                            768: { slidesPerView: 2, spaceBetween: 30 },
+                            1024: { slidesPerView: 3, spaceBetween: 30 }
+                        }
+                    });
+                } catch (error) {
+                    console.error('Swiper 초기화 중 오류가 발생했습니다:', error);
+                }
+            }
+
+            // 즉시 실행 및 외부 스크립트 지연 로드 대비 Fallback 등록
+            initHospitalSwiper();
+            window.addEventListener('load', initHospitalSwiper);
+
+            // Intersection Observer (스크롤 애니메이션)
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            document.querySelectorAll('.stagger-group').forEach(group => {
+                const groupObserver = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const items = entry.target.querySelectorAll('.stagger-item');
+                            items.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('active');
+                                }, index * 100); 
+                            });
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+                
+                groupObserver.observe(group);
+            });
+        });
+
+        // FAQ 아코디언 토글 기능
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const content = item.querySelector('.faq-content');
+            
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-content').style.maxHeight = null;
+                }
+            });
+
+            item.classList.toggle('active');
+            if (item.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = null;
+            }
+        }
+
+        // 모바일 사이드바 토글 기능
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileCloseBtn = document.getElementById('mobile-close-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+
+        function openMobileMenu() {
+            mobileOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                mobileOverlay.classList.remove('opacity-0');
+                mobileOverlay.classList.add('opacity-100');
+                mobileSidebar.classList.remove('translate-x-full');
+            }, 10);
+        }
+
+        function closeMobileMenu() {
+            mobileSidebar.classList.add('translate-x-full');
+            mobileOverlay.classList.remove('opacity-100');
+            mobileOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                mobileOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+        if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileMenu);
+    </script>
+</body>
+</html>
